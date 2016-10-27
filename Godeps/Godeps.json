@@ -1,0 +1,25 @@
+{
+	"ImportPath": "github.com/Luzifer/git-recurse-status",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/Luzifer/go_helpers/str",
+			"Comment": "v2.0.0",
+			"Rev": "ac31ada360cdfabd6fdaf573b9f06a845e2575bc"
+		},
+		{
+			"ImportPath": "github.com/Luzifer/rconfig",
+			"Comment": "v1.1.0",
+			"Rev": "c27bd3a64b5b19556914d9fec69922cf3852d585"
+		},
+		{
+			"ImportPath": "github.com/spf13/pflag",
+			"Rev": "c7e63cf4530bcd3ba943729cee0efeff2ebea63f"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v2",
+			"Rev": "31c299268d302dd0aa9a0dcf765a3d58971ac83f"
+		}
+	]
+}
