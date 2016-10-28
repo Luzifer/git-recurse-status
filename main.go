@@ -23,13 +23,13 @@ const (
 	STATUS_BEHIND   = "behind"
 	STATUS_UPTODATE = "uptodate"
 
-	MOD_UNKNOWN  = "unknown"
-	MOD_ADDED    = "added"
-	MOD_MODIFIED = "modified"
-	MOD_REMOVED  = "removed"
-	MOD_DELETED  = "deleted"
-	MOD_STASHED  = "stashed"
-	MOD_CHANGED  = "changed" // Special status to filter all repos having any changes
+	MOD_UNTRACKED = "untracked"
+	MOD_ADDED     = "added"
+	MOD_MODIFIED  = "modified"
+	MOD_REMOVED   = "removed"
+	MOD_DELETED   = "deleted"
+	MOD_STASHED   = "stashed"
+	MOD_CHANGED   = "changed" // Special status to filter all repos having any changes
 
 	FILTER_REMOTE = "remote"
 )
@@ -44,7 +44,7 @@ var (
 	}{}
 
 	porcelainFlags = map[string]string{
-		"??": MOD_UNKNOWN,
+		"??": MOD_UNTRACKED,
 		"A ": MOD_ADDED,
 		"M ": MOD_ADDED,
 		" M": MOD_MODIFIED,
@@ -57,12 +57,12 @@ var (
 	}
 
 	flagSigns = map[string]string{
-		MOD_UNKNOWN:  "U",
-		MOD_ADDED:    "A",
-		MOD_MODIFIED: "M",
-		MOD_REMOVED:  "R",
-		MOD_DELETED:  "D",
-		MOD_STASHED:  "S",
+		MOD_UNTRACKED: "U",
+		MOD_ADDED:     "A",
+		MOD_MODIFIED:  "M",
+		MOD_REMOVED:   "R",
+		MOD_DELETED:   "D",
+		MOD_STASHED:   "S",
 	}
 
 	statusSigns = map[string]string{
@@ -73,7 +73,7 @@ var (
 	}
 
 	collectionStatus        = []string{STATUS_AHEAD, STATUS_BEHIND, STATUS_DIVERGED, STATUS_UPTODATE}
-	collectionModifications = []string{MOD_ADDED, MOD_UNKNOWN, MOD_REMOVED, MOD_STASHED, MOD_DELETED, MOD_MODIFIED, MOD_CHANGED}
+	collectionModifications = []string{MOD_ADDED, MOD_UNTRACKED, MOD_REMOVED, MOD_STASHED, MOD_DELETED, MOD_MODIFIED, MOD_CHANGED}
 
 	traverseResults = make(chan string, 10)
 
