@@ -15,8 +15,9 @@ Wrapper around git to display status of a whole tree of directories to detect un
 ```bash
 # git-recurse-status --help
 Usage of git-recurse-status:
-  -f, --filter stringSlice   Attributes to filter for (AND combined)
+  -f, --filter stringSlice   Attributes to filter for
       --format string        Output format (default "[{{.U}}{{.A}}{{.M}}{{.R}}{{.D}}{{.S}} {{.State}}] {{.Path}} ({{if .Remote}}{{.Remote}} » {{end}}{{.Branch}})")
+      --or                   Switch combining of filters from AND to OR
   -s, --search string        String to search for in output
       --version              Prints current version and exits
 ```
@@ -31,13 +32,15 @@ Possible filters:
   - `behind` - Remote has new commits (remote repository is not automatically fetched!)
   - `uptodate` - No known changes against remote
 - By local changes:
-  - `unknown` - There are files not yet known to git
+  - `untracked` - There are files not yet known to git
   - `added` - Local files are added to the index but not yet committed
   - `modified` - Local files are modified but not added to the index
   - `removed` - Local files were removed but not yet deleted from the index
   - `deleted` - Files are marked to be removed in the index
   - `stashed` - You have changes in the stash
   - `changed` - Shortcut for all local changes at once
+- Other filters
+  - `remote` - Repositories having a remote named "origin" set
 
 All filters mentioned above are extendable with the prefix `no-` to negate them (example: `no-changes`).
 
