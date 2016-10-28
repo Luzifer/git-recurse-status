@@ -30,6 +30,8 @@ const (
 	MOD_DELETED  = "deleted"
 	MOD_STASHED  = "stashed"
 	MOD_CHANGED  = "changed" // Special status to filter all repos having any changes
+
+	FILTER_REMOTE = "remote"
 )
 
 var (
@@ -124,6 +126,13 @@ func (r repoStatus) matches(filters []string) bool {
 
 		if r.Modifications[f] != expect && str.StringInSlice(f, collectionModifications) {
 			match = false
+		}
+
+		switch f {
+		case FILTER_REMOTE:
+			if (r.Remote != "") != expect {
+				match = false
+			}
 		}
 	}
 
