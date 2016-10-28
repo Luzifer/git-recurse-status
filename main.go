@@ -36,8 +36,9 @@ const (
 
 var (
 	cfg = struct {
-		Filter         []string `flag:"filter,f" default:"" description:"Attributes to filter for (AND combined)"`
+		Filter         []string `flag:"filter,f" default:"" description:"Attributes to filter for"`
 		Format         string   `flag:"format" vardefault:"format" description:"Output format"`
+		Or             bool     `flag:"or" default:"false" description:"Switch combining of filters from AND to OR"`
 		Search         string   `flag:"search,s" default:"" description:"String to search for in output"`
 		VersionAndExit bool     `flag:"version" default:"false" description:"Prints current version and exits"`
 	}{}
@@ -110,7 +111,7 @@ func getRepoStatus(path string) (*repoStatus, error) {
 }
 
 func (r repoStatus) matches(filters []string) bool {
-	match := true
+	match := !cfg.Or
 
 	for _, f := range filters {
 		if len(strings.TrimSpace(f)) == 0 {
@@ -120,23 +121,28 @@ func (r repoStatus) matches(filters []string) bool {
 		expect := !strings.HasPrefix(f, "no-")
 		f = strings.TrimPrefix(f, "no-")
 
-		if (r.RemoteStatus == f) != expect && str.StringInSlice(f, collectionStatus) {
-			match = false
+		if str.StringInSlice(f, collectionStatus) {
+			match = andOrAdd(match, cfg.Or, (r.RemoteStatus == f) == expect)
 		}
 
-		if r.Modifications[f] != expect && str.StringInSlice(f, collectionModifications) {
-			match = false
+		if str.StringInSlice(f, collectionModifications) {
+			match = andOrAdd(match, cfg.Or, r.Modifications[f] == expect)
 		}
 
 		switch f {
 		case FILTER_REMOTE:
-			if (r.Remote != "") != expect {
-				match = false
-			}
+			match = andOrAdd(match, cfg.Or, (r.Remote != "") == expect)
 		}
 	}
 
 	return match
+}
+
+func andOrAdd(in, or, add bool) bool {
+	if or {
+		return in || add
+	}
+	return in && add
 }
 
 func (r repoStatus) String() string {
