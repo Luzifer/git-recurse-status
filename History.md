@@ -1,3 +1,8 @@
+# 0.3.0 / 2016-10-28
+
+  * Change "unknown" to "untracked" to be more in git language
+  * Add support for OR combinations
+
 # 0.2.0 / 2016-10-28
 
   * Add meta-filter "remote"
